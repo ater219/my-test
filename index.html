@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日好運 | Test Vận May</title>
+    <style>
+        body { background: #121212; color: white; font-family: sans-serif; text-align: center; padding-top: 100px; }
+        .card { background: #1e1e1e; padding: 30px; border-radius: 20px; display: inline-block; border: 1px solid #333; }
+        button { background: #fe2c55; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        input { padding: 10px; border-radius: 5px; border: none; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>今日好運測驗 🇹🇼 🇻🇳</h2>
+        <input type="text" id="n" placeholder="輸入名字 / Nhập tên"><br>
+        <button onclick="g()">開始測驗 / Bắt đầu</button>
+        <p id="r" style="color:#25f4ee; font-weight:bold;"></p>
+    </div>
+    <script>
+        function g(){
+            const f = ["大吉！貴人相助 / Đại cát! Có quý nhân","財運亨通 / Tài lộc hanh thông","好事發生 / Chuyện tốt sắp đến"];
+            document.getElementById('r').innerText = f[Math.floor(Math.random()*f.length)];
+        }
+    </script>
+</body>
+</html>
