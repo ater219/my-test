@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>今日好運測驗 / Test vận may</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 50px; background: #f4f4f4; }
+        .box { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        button { background: #ff0050; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>今日好運測驗 / Test vận may</h2>
+        <input type="text" id="name" placeholder="輸入名字 / Nhập tên">
+        <button onclick="getFortune()">開始測驗</button>
+        <p id="result"></p>
+    </div>
+    <!-- 廣告位置預留 / Vị trí quảng cáo -->
+    <div style="margin-top:50px; color:#ccc;">[廣告位 / Ads Area]</div>
+
+    <script>
+        function getFortune() {
+            const fortunes = [
+                "今天會有貴人相助！ / Hôm nay sẽ có quý nhân phù trợ!",
+                "適合投資自己的一天。 / Một ngày tốt để đầu tư vào bản thân.",
+                "好消息即將傳來。 / Tin tốt sắp đến với bạn."
+            ];
+            const random = fortunes[Math.floor(Math.random() * fortunes.length)];
+            document.getElementById('result').innerText = random;
+        }
+    </script>
+</body>
+</html>
