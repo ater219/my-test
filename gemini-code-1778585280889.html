@@ -1,33 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-    <title>今日好運測驗 / Test vận may</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日好運測驗 | Test Vận May</title>
     <style>
-        body { font-family: Arial; text-align: center; padding: 50px; background: #f4f4f4; }
-        .box { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        button { background: #ff0050; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        :root {
+            --primary-color: #fe2c55; /* TikTok Red */
+            --secondary-color: #25f4ee; /* TikTok Cyan */
+            --bg-color: #121212;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #121212 0%, #1f1f1f 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .flags {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            font-size: 22px;
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 80%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(254, 44, 85, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        #result-box {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            min-height: 50px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fortune-ch { font-size: 18px; color: var(--secondary-color); margin-bottom: 5px; font-weight: bold; }
+        .fortune-vn { font-size: 16px; color: #eee; font-style: italic; }
+
+        .ads-placeholder {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #444;
+            border-top: 1px dashed #333;
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>今日好運測驗 / Test vận may</h2>
-        <input type="text" id="name" placeholder="輸入名字 / Nhập tên">
-        <button onclick="getFortune()">開始測驗</button>
-        <p id="result"></p>
-    </div>
-    <!-- 廣告位置預留 / Vị trí quảng cáo -->
-    <div style="margin-top:50px; color:#ccc;">[廣告位 / Ads Area]</div>
 
-    <script>
-        function getFortune() {
-            const fortunes = [
-                "今天會有貴人相助！ / Hôm nay sẽ có quý nhân phù trợ!",
-                "適合投資自己的一天。 / Một ngày tốt để đầu tư vào bản thân.",
-                "好消息即將傳來。 / Tin tốt sắp đến với bạn."
-            ];
-            const random = fortunes[Math.floor(Math.random() * fortunes.length)];
-            document.getElementById('result').innerText = random;
+<div class="container">
+    <div class="flags">🇹🇼 🤝 🇻🇳</div>
+    <h2>今日好運測驗</h2>
+    <p class="subtitle">Test Vận May Hôm Nay</p>
+    
+    <input type="text" id="nameInput" placeholder="輸入你的名字 / Nhập tên của bạn">
+    <br>
+    <button onclick="getFortune()">點擊測驗 / Bắt đầu</button>
+
+    <div id="result-box">
+        <div id="ch-res" class="fortune-ch"></div>
+        <div id="vn-res" class="fortune-vn"></div>
+    </div>
+
+    <div class="ads-placeholder">
+        推薦內容 / Nội dung gợi ý<br>
+        <!-- 未來廣告代碼貼在此處 -->
+    </div>
+</div>
+
+<script>
+    function getFortune() {
+        const name = document.getElementById('nameInput').value;
+        if (!name) {
+            alert("請輸入名字 / Vui lòng nhập tên");
+            return;
         }
-    </script>
+
+        const fortunes = [
+            { ch: "大吉！今天會有貴人相助。", vn: "Đại cát! Hôm nay sẽ có quý nhân phù trợ." },
+            { ch: "財運亨通，適合執行新計畫。", vn: "Tài lộc hanh thông, thích hợp cho kế hoạch mới." },
+            { ch: "心情愉快，好事即將發生。", vn: "Tâm trạng vui vẻ, chuyện tốt sắp xảy ra." },
+            { ch: "步步高升，工作表現被看見。", vn: "Từng bước thăng tiến, nỗ lực sẽ được ghi nhận." },
+            { ch: "健康平安，適合放鬆心情。", vn: "Sức khỏe bình an, thích hợp để thư giãn." }
+        ];
+
+        const random = fortunes[Math.floor(Math.random() * fortunes.length)];
+        
+        document.getElementById('result-box').style.display = 'block';
+        document.getElementById('ch-res').innerText = random.ch;
+        document.getElementById('vn-res').innerText = random.vn;
+    }
+</script>
+
 </body>
 </html>
